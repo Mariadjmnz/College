@@ -22,40 +22,44 @@ int main()
     float P;
     float B;
     float D;
+    const int min_pop = 2;
     float pop_est;
     int rate;
 
-     cout << "Insert the population of the first day of the year: ";
-     cin >> P;
+    //repeat statement if user enters invalid input  
+    do {
+         cout << "Insert the population of the first day of the year: ";
+         cin >> P;
 
-     //close program when user inserts invalid number
-        if (P < 2)
-        {
-            cout << "ERROR. NEEDS GREATER VALUE.";
+            if (P < min_pop)
+            {
+                cout << "ERROR. NEEDS GREATER VALUE.";
+            }
+        } while (P < min_pop);
+    
+    //repeat statement if user enters invalid input  
+    do {
+         cout << "\n Insert the Birth Rate: ";
+         cin >> B;
 
-            return 0;
-        }
-     cout << "\n Insert the Birth Rate: ";
-     cin >> B;
+            if (B < 0)
+            {
+                cout << "ERROR. NEEDS GREATER VALUE.";
+            }
+        } while (B < 0);
+        
+      //repeat statement if user enters invalid input  
+    do {
+         cout << "\n Insert the Death Rate: ";
+         cin >> D;
 
-     //close program when user inserts invalid number
-        if (B < 0)
-        {
-            cout << "ERROR. NEEDS GREATER VALUE.";
-
-            return 0;
-        }
-     cout << "\n Insert the Death Rate: ";
-     cin >> D;
-
-     //close program when user inserts invalid number
-     if (D < 0)
-        {
-            cout << "ERROR. NEEDS GREATER VALUE.";
-
-            return 0;
-        }
-
+         if (D < 0)
+            {
+                cout << "ERROR. NEEDS GREATER VALUE.";
+            }
+        } while (D < 0);
+    
+    
      PopEstimate(P,B,D,pop_est);
      cout << "The estimate of the population of the year would be: " << pop_est << endl;
 
