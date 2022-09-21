@@ -26,46 +26,50 @@ int main()
     float pop_est;
     int rate;
 
-    //repeat statement if user enters invalid input  
-    do {
-         cout << "Insert the population of the first day of the year: ";
+    //repeat statement if user enters invalid input
+    cout << "Insert the population of the first day of the year: ";
          cin >> P;
 
-            if (P < min_pop)
-            {
-                cout << "ERROR. NEEDS GREATER VALUE.";
-            }
+    if (P < min_pop)
+    {
+        do{
+           cout << "ERROR. NEEDS GREATER VALUE." << endl;
+           cout << "Insert the population of the first day of the year: ";
+           cin >> P;
         } while (P < min_pop);
-    
-    //repeat statement if user enters invalid input  
-    do {
-         cout << "\n Insert the Birth Rate: ";
+    }
+
+    //repeat statement if user enters invalid input
+    cout << "\n Insert the Birth Rate: ";
          cin >> B;
-
-            if (B < 0)
-            {
+    if (B < 0)
+        {
+            do{
                 cout << "ERROR. NEEDS GREATER VALUE.";
-            }
-        } while (B < 0);
-        
-      //repeat statement if user enters invalid input  
-    do {
-         cout << "\n Insert the Death Rate: ";
+                cout << "\n Insert the Birth Rate: ";
+                cin >> B;
+            } while (B < 0);
+        }
+
+
+      //repeat statement if user enters invalid input
+      cout << "\n Insert the Death Rate: ";
          cin >> D;
-
          if (D < 0)
-            {
-                cout << "ERROR. NEEDS GREATER VALUE.";
-            }
-        } while (D < 0);
-    
-    
+         {
+             do{
+                 cout << "ERROR. NEEDS GREATER VALUE.";
+                 cout << "\n Insert the Death Rate: ";
+                 cin >> D;
+             } while (D < 0);
+         }
+
+
      PopEstimate(P,B,D,pop_est);
      cout << "The estimate of the population of the year would be: " << pop_est << endl;
 
      GrowthRate(B,D,rate);
      cout << "The growth rate it's predicted to be of: " << rate << "%" << endl;
-
 
     return 0;
 }
