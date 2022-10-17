@@ -2,87 +2,96 @@
 * Name: Maria Jimenez
 * Course: CS 250
 * Description:
-* This program will give out the estimated
-* population given the birth and
-* death rate while avoiding negative numbers
-* nor a population less than 2.
+* Program assignment #02
 */
 
 #include <iostream>
-
+#include <iomanip>
 using namespace std;
 
-//initialization
-void PopEstimate(float &,float &,float &, float &);
-void GrowthRate(float &,float &, int &);
+class Person
+{
+    string name;
+
+public:
+    void person_info()
+    {
+        cout<< "Enter Person name: ";
+        cin>>name;
+    }
+};
+
+class Student: private Person
+{
+   string courses[10];
+   int taking = 0;
+
+   public:
+       void student_info()
+       {
+           person_info();
+           cout<< "How many courses is the student taking? ";
+           cin>> taking;
+
+           do
+           {
+               if(taking >= 10)
+               {
+                   cout<<"ERROR, STUDENT CAN NOT HAVE MORE THAN 10 COURSES." << endl <<
+                        "How many courses is the student taking? ";
+                        cin>> taking;
+               }
+
+           }while(taking >= 10);
+
+           cout << "Insert the name of the student courses: ";
+                for (int i=0; i<taking; i++)
+                    cin >> courses[i];
+       }
+
+       void student_display()
+       {
+           cout<< " \n The student is taking "<< taking << " courses : " << endl;
+                 for ( int i=0; i< taking;i++)
+                 cout << courses[i] << ", ";
+       }
+};
+
+class Professor: private Person
+{
+    string office;
+
+public:
+    void professor_info()
+    {
+        person_info();
+
+        cout << "Insert the professor's office: ";
+        cin >>office;
+    }
+};
 
 int main()
 {
 
-    float P;
-    float B;
-    float D;
-    const int min_pop = 2;
-    float pop_est;
-    int rate;
 
-    //repeat statement if user enters invalid input
-    cout << "Insert the population of the first day of the year: ";
-         cin >> P;
+    string option1 = "Student";
+    string option2 = "Professor";
+    int opt;
 
-    if (P < min_pop)
+    cout << "Choose between (1)"<<option1<< " or (2)"<<option2<< endl;
+    cin >> opt;
+    if (opt == 1)
     {
-        do{
-           cout << "ERROR. NEEDS GREATER VALUE." << endl;
-           cout << "Insert the population of the first day of the year: ";
-           cin >> P;
-        } while (P < min_pop);
+        Student student_info;
+        student_info.student_info();
+        student_info.student_display();
+    }
+    else {
+        Professor professor_info;
+        professor_info.professor_info();
     }
 
-    //repeat statement if user enters invalid input
-    cout << "\n Insert the Birth Rate: ";
-         cin >> B;
-    if (B < 0)
-        {
-            do{
-                cout << "ERROR. NEEDS GREATER VALUE.";
-                cout << "\n Insert the Birth Rate: ";
-                cin >> B;
-            } while (B < 0);
-        }
-
-
-      //repeat statement if user enters invalid input
-      cout << "\n Insert the Death Rate: ";
-         cin >> D;
-         if (D < 0)
-         {
-             do{
-                 cout << "ERROR. NEEDS GREATER VALUE.";
-                 cout << "\n Insert the Death Rate: ";
-                 cin >> D;
-             } while (D < 0);
-         }
-
-
-     PopEstimate(P,B,D,pop_est);
-     cout << "The estimate of the population of the year would be: " << pop_est << endl;
-
-     GrowthRate(B,D,rate);
-     cout << "The growth rate it's predicted to be of: " << rate << "%" << endl;
 
     return 0;
-}
-
-void PopEstimate (float &P, float &B,float &D, float &pop_est)
-{
-
-    pop_est = P + ((B*P)/100) - ((D*P)/100);
-
-}
-
-void GrowthRate (float &B, float &D, int &rate)
-{
-    rate = B-D;
-
 }
