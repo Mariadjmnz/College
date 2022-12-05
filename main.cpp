@@ -1,97 +1,64 @@
-/*
-* Name: Maria Jimenez
-* Course: CS 250
-* Description:
-* Program assignment #02
-*/
-
 #include <iostream>
-#include <iomanip>
+#include <unordered_map>
+#include <string>
+#include <fstream>
+
 using namespace std;
 
-class Person
+class Dogs
 {
-    string name;
-
 public:
-    void person_info()
-    {
-        cout<< "Enter Person name: ";
-        cin>>name;
-    }
-};
-
-class Student: private Person
-{
-   string courses[10];
-   int taking = 0;
-
-   public:
-       void student_info()
-       {
-           person_info();
-           cout<< "How many courses is the student taking? ";
-           cin>> taking;
-
-           do
-           {
-               if(taking >= 10)
-               {
-                   cout<<"ERROR, STUDENT CAN NOT HAVE MORE THAN 10 COURSES." << endl <<
-                        "How many courses is the student taking? ";
-                        cin>> taking;
-               }
-
-           }while(taking >= 10);
-
-           cout << "Insert the name of the student courses: ";
-                for (int i=0; i<taking; i++)
-                    cin >> courses[i];
-       }
-
-       void student_display()
-       {
-           cout<< " \n The student is taking "<< taking << " courses : " << endl;
-                 for ( int i=0; i< taking;i++)
-                 cout << courses[i] << ", ";
-       }
-};
-
-class Professor: private Person
-{
-    string office;
-
-public:
-    void professor_info()
-    {
-        person_info();
-
-        cout << "Insert the professor's office: ";
-        cin >>office;
-    }
+    int dogcount;
+    string country;
 };
 
 int main()
 {
+    int totaldogs = 0;
+    int option;
+    string country_name;
+    Dogs obj;
+    unordered_map<string,int> ump;
+    ifstream infile;
+    infile.open("dogs.txt");
 
-
-    string option1 = "Student";
-    string option2 = "Professor";
-    int opt;
-
-    cout << "Choose between (1)"<<option1<< " or (2)"<<option2<< endl;
-    cin >> opt;
-    if (opt == 1)
+    if (!infile)
     {
-        Student student_info;
-        student_info.student_info();
-        student_info.student_display();
-    }
-    else {
-        Professor professor_info;
-        professor_info.professor_info();
+        cout << endl << "Error opening file" <<endl;
+        return 1;
     }
 
+    while (infile>>obj.country>>obj.dogcount)
+    {
+        //cout << obj.country << '\t' << obj.dogcount << '\n';
+        ump.insert({obj.country,obj.dogcount});
+        totaldogs += obj.dogcount;
+    }
+
+    cout << "\t Welcome to our Menu \n"
+         << "\t select an option: \n \n" << endl;
+    cout << "1. See number of total dogs around the world. \n"
+         << "2. See the number of dogs in a specific country. \n \n";
+    cout << "Option: ";
+    cin  >> option;
+
+    if (option == 1)
+    {
+        cout << "The total number of dogs is: " << totaldogs;
+    }
+    else if (option == 2)
+    {
+        cout << "Enter the country name: ";
+        cin >> country_name;
+
+        auto it = ump.find(country_name);
+        if (it != ump.end())
+        {
+            cout << it-> obj.country << " " << it -> obj.dogcount << endl;
+        }
+        else
+            cout << country_name << " is not present." << endl;
+    }
 
     return 0;
 }
