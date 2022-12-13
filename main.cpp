@@ -1,64 +1,45 @@
 #include <iostream>
-#include <unordered_map>
 #include <string>
-#include <fstream>
+#include <algorithm>
+#include <exception>
 
 using namespace std;
 
-class Dogs
-{
-public:
-    int dogcount;
-    string country;
-};
 
-int main()
-{
-    int totaldogs = 0;
-    int option;
-    string country_name;
-    Dogs obj;
-    unordered_map<string,int> ump;
-    ifstream infile;
-    infile.open("dogs.txt");
+bool Palindrome(string str) {
 
-    if (!infile)
-    {
-        cout << endl << "Error opening file" <<endl;
-        return 1;
+//only one letter is palindrome
+    if(str.empty() || str.length() == 1) {
+        return true;
     }
 
-    while (infile>>obj.country>>obj.dogcount)
-    {
-        //cout << obj.country << '\t' << obj.dogcount << '\n';
-        ump.insert({obj.country,obj.dogcount});
-        totaldogs += obj.dogcount;
-    }
+//check if first and last characters are the same
+   if (str[0] == str[str.length() - 1]) {
+    return Palindrome(str.substr(1, str.length() - 2));
+   }
+else {
+    return false;
+}
+}
 
-    cout << "\t Welcome to our Menu \n"
-         << "\t select an option: \n \n" << endl;
-    cout << "1. See number of total dogs around the world. \n"
-         << "2. See the number of dogs in a specific country. \n \n";
-    cout << "Option: ";
-    cin  >> option;
+int main() {
+    string str;
 
-    if (option == 1)
-    {
-        cout << "The total number of dogs is: " << totaldogs;
-    }
-    else if (option == 2)
-    {
-        cout << "Enter the country name: ";
-        cin >> country_name;
+try {
+    cout << "Enter a Palindrome: ";
+    cin >> str;
 
-        auto it = ump.find(country_name);
-        if (it != ump.end())
-        {
-            cout << it-> obj.country << " " << it -> obj.dogcount << endl;
-        }
-        else
-            cout << country_name << " is not present." << endl;
-    }
+    if(str.empty())
+        throw runtime_error("ERROR. Empty input.");
 
-    return 0;
+    if(Palindrome(str))
+        cout << str << ", is a palindrome" << endl;
+    else
+        cout << str << ", is not a palindrome" << endl;
+}
+catch(const char* msg) {
+    cout << msg << endl;
+}
+return 0;
+
 }
